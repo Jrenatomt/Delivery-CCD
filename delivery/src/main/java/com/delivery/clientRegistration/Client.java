@@ -13,6 +13,10 @@ public class Client {
     private String email;
     private String phone;
 
+    @Deprecated
+    public Client(){
+    }
+
     public Client(String name, String email, String phone) {
         this.name  = name;
         this.email = email;

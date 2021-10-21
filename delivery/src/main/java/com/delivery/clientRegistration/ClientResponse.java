@@ -1,7 +1,5 @@
 package com.delivery.clientRegistration;
 
-import java.util.Optional;
-
 public class ClientResponse {
 
     private String name;
@@ -18,4 +16,15 @@ public class ClientResponse {
         this.phone = client.getPhone();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
 }

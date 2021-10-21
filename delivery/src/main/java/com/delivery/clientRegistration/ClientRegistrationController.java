@@ -1,6 +1,9 @@
 package com.delivery.clientRegistration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -15,6 +18,18 @@ public class ClientRegistrationController {
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @GetMapping
+    public ResponseEntity<Page<ClientResponse>> findAllClients(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy ){
+
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        Page<Client> clients = clientRepository.findAll(pageRequest);
+        return ResponseEntity.ok().body((clients.map(ClientResponse::new)));
+    }
 
     @PostMapping
     public ResponseEntity<?> clientInsert(@RequestBody @Valid  ClientRequest request){
@@ -32,6 +47,5 @@ public class ClientRegistrationController {
             return ResponseEntity.badRequest().build();
         }
        return ResponseEntity.ok().body(new ClientResponse(client.get()));
-        //return client.map(value -> ResponseEntity.ok().body(new ClientResponse(value))).orElseGet(() -> ResponseEntity.badRequest().build());
     }
 }
