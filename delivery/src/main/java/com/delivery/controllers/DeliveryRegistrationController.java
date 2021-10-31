@@ -1,5 +1,6 @@
-package com.delivery.deliveryRegistration;
+package com.delivery.controllers;
 
+import com.delivery.deliveryRegistration.DeliveryRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,5 +1,9 @@
-package com.delivery.clientRegistration;
+package com.delivery.controllers;
 
+import com.delivery.model.Client;
+import com.delivery.model.dto.ClientRequest;
+import com.delivery.model.dto.ClientResponse;
+import com.delivery.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,7 +36,7 @@ public class ClientRegistrationController {
     }
 
     @PostMapping
-    public ResponseEntity<?> clientInsert(@RequestBody @Valid  ClientRequest request){
+    public ResponseEntity<?> clientInsert(@RequestBody @Valid ClientRequest request){
         Client newClient = request.toModel();
         clientRepository.save(newClient);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -43,9 +47,9 @@ public class ClientRegistrationController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<ClientResponse> getClient(@PathVariable Long id) {
         Optional<Client> client = clientRepository.findById(id);
-        if (!client.isPresent()){
-            return ResponseEntity.badRequest().build();
+        if (client.isPresent()){
+            return ResponseEntity.ok().body(new ClientResponse(client.get()));
         }
-       return ResponseEntity.ok().body(new ClientResponse(client.get()));
+        return ResponseEntity.notFound().build();
     }
 }

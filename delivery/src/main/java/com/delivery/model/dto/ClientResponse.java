@@ -1,4 +1,6 @@
-package com.delivery.clientRegistration;
+package com.delivery.model.dto;
+
+import com.delivery.model.Client;
 
 public class ClientResponse {
 

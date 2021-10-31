@@ -1,4 +1,4 @@
-package com.delivery.clientRegistration;
+package com.delivery.model;
 
 import javax.persistence.*;
 
